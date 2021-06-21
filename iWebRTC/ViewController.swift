@@ -8,12 +8,15 @@
 import UIKit
 
 class ViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
+    
+    
+    @IBAction private func showRTC(_ sender: UIButton) {
+        let rtcVC = RTCViewController()
+        rtcVC.modalPresentationStyle = .overFullScreen
+        self.present(rtcVC, animated: true, completion: nil)
+    }
 }
 
