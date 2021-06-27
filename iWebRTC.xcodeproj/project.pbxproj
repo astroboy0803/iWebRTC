@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		7801AB23267F50B30048955F /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 7801AB22267F50B30048955F /* Starscream */; };
 		7801AB26267F51200048955F /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 7801AB25267F51200048955F /* WebRTC */; };
+		7857ED00268898C900C31491 /* CustomRTCMTLVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857ECFF268898C900C31491 /* CustomRTCMTLVideoView.swift */; };
 		788DECCB267F4D2800C6141E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DECCA267F4D2800C6141E /* AppDelegate.swift */; };
 		788DECCF267F4D2800C6141E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788DECCE267F4D2800C6141E /* ViewController.swift */; };
 		788DECD2267F4D2800C6141E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788DECD0267F4D2800C6141E /* Main.storyboard */; };
 		788DECD4267F4D2900C6141E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 788DECD3267F4D2900C6141E /* Assets.xcassets */; };
 		788DECD7267F4D2900C6141E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788DECD5267F4D2900C6141E /* LaunchScreen.storyboard */; };
+		78BAA4BF26879D46007495D4 /* ViewRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAA4BE26879D46007495D4 /* ViewRecorder.swift */; };
+		78BAA4C22687A045007495D4 /* ImageToVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAA4C12687A045007495D4 /* ImageToVideo.swift */; };
 		78CEB883267F5184009A5955 /* RTCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CEB880267F5184009A5955 /* RTCConfig.swift */; };
 		78CEB884267F5184009A5955 /* RTCRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CEB881267F5184009A5955 /* RTCRecorder.swift */; };
 		78CEB885267F5184009A5955 /* RTCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CEB882267F5184009A5955 /* RTCViewController.swift */; };
@@ -29,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7857ECFF268898C900C31491 /* CustomRTCMTLVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRTCMTLVideoView.swift; sourceTree = "<group>"; };
 		788DECC7267F4D2800C6141E /* iWebRTC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWebRTC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		788DECCA267F4D2800C6141E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		788DECCE267F4D2800C6141E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +40,8 @@
 		788DECD3267F4D2900C6141E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		788DECD6267F4D2900C6141E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		788DECD8267F4D2900C6141E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78BAA4BE26879D46007495D4 /* ViewRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRecorder.swift; sourceTree = "<group>"; };
+		78BAA4C12687A045007495D4 /* ImageToVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToVideo.swift; sourceTree = "<group>"; };
 		78CEB880267F5184009A5955 /* RTCConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCConfig.swift; sourceTree = "<group>"; };
 		78CEB881267F5184009A5955 /* RTCRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCRecorder.swift; sourceTree = "<group>"; };
 		78CEB882267F5184009A5955 /* RTCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7857ECFC268896A800C31491 /* Testing */ = {
+			isa = PBXGroup;
+			children = (
+				7857ECFF268898C900C31491 /* CustomRTCMTLVideoView.swift */,
+			);
+			path = Testing;
+			sourceTree = "<group>";
+		};
 		788DECBE267F4D2800C6141E = {
 			isa = PBXGroup;
 			children = (
@@ -93,12 +107,38 @@
 			path = iWebRTC;
 			sourceTree = "<group>";
 		};
+		78BAA4C02687A01B007495D4 /* Recorder */ = {
+			isa = PBXGroup;
+			children = (
+				7857ECFC268896A800C31491 /* Testing */,
+				78BAA4C42687A66A007495D4 /* ReplayKit */,
+				78BAA4C32687A65E007495D4 /* ViewRecorder */,
+			);
+			path = Recorder;
+			sourceTree = "<group>";
+		};
+		78BAA4C32687A65E007495D4 /* ViewRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				78BAA4BE26879D46007495D4 /* ViewRecorder.swift */,
+				78BAA4C12687A045007495D4 /* ImageToVideo.swift */,
+			);
+			path = ViewRecorder;
+			sourceTree = "<group>";
+		};
+		78BAA4C42687A66A007495D4 /* ReplayKit */ = {
+			isa = PBXGroup;
+			children = (
+				78CEB881267F5184009A5955 /* RTCRecorder.swift */,
+			);
+			path = ReplayKit;
+			sourceTree = "<group>";
+		};
 		78CEB87F267F5170009A5955 /* WebRTC */ = {
 			isa = PBXGroup;
 			children = (
 				78CEB886267F518D009A5955 /* Services */,
 				78CEB880267F5184009A5955 /* RTCConfig.swift */,
-				78CEB881267F5184009A5955 /* RTCRecorder.swift */,
 				78CEB882267F5184009A5955 /* RTCViewController.swift */,
 			);
 			path = WebRTC;
@@ -107,6 +147,7 @@
 		78CEB886267F518D009A5955 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				78BAA4C02687A01B007495D4 /* Recorder */,
 				78CEB88E267F51C4009A5955 /* WebSocketProvider */,
 				78CEB88D267F51BB009A5955 /* Extensions */,
 				78CEB888267F51A7009A5955 /* Message.swift */,
@@ -218,13 +259,16 @@
 				78CEB89A267F51F6009A5955 /* SessionDescription.swift in Sources */,
 				788DECCF267F4D2800C6141E /* ViewController.swift in Sources */,
 				78CEB894267F51DD009A5955 /* StarscreamProvider.swift in Sources */,
+				7857ED00268898C900C31491 /* CustomRTCMTLVideoView.swift in Sources */,
 				78CEB899267F51F6009A5955 /* IceCandidate.swift in Sources */,
 				78CEB898267F51F6009A5955 /* RTCStates.swift in Sources */,
 				78CEB88A267F51A7009A5955 /* SignalingClient.swift in Sources */,
 				78CEB883267F5184009A5955 /* RTCConfig.swift in Sources */,
 				78CEB88C267F51A7009A5955 /* WebRTCClient.swift in Sources */,
 				78CEB885267F5184009A5955 /* RTCViewController.swift in Sources */,
+				78BAA4C22687A045007495D4 /* ImageToVideo.swift in Sources */,
 				788DECCB267F4D2800C6141E /* AppDelegate.swift in Sources */,
+				78BAA4BF26879D46007495D4 /* ViewRecorder.swift in Sources */,
 				78CEB892267F51DD009A5955 /* NativeWebSocket.swift in Sources */,
 				78CEB884267F5184009A5955 /* RTCRecorder.swift in Sources */,
 				78CEB88B267F51A7009A5955 /* Message.swift in Sources */,

@@ -60,8 +60,8 @@ internal final class RTCViewController: UIViewController {
         return button
     }()
 
-    private let customerView: RTCMTLVideoView = {
-        let view = RTCMTLVideoView(frame: .zero)
+    private let customerView: CustomRTCMTLVideoView = {
+        let view = CustomRTCMTLVideoView(frame: .zero)
         view.videoContentMode = .scaleAspectFit
         return view
     }()
@@ -76,9 +76,11 @@ internal final class RTCViewController: UIViewController {
     private let webRTCClient: WebRTCClient
     private let signalClient: SignalingClient
     private let recorder: RTCRecorder
+    private let viewRecorder: ViewRecorder
     private var isRetry: Bool = true
 
     init() {
+        self.viewRecorder = .init()
         self.recorder = .init()
         self.recorder.recordingQua = .good
 //        self.recorder.onRecordingError = {
@@ -222,17 +224,29 @@ extension RTCViewController {
     // MARK: 錄影
     @objc
     private func doRecord(_ sender: UIButton) {
-        self.recorder.startRecording { _ in
-            
-        }
+//        self.recorder.startRecording { _ in
+//
+//        }
+        
+//        self.recordButton.isEnabled = false
+//        self.viewRecorder.startRecording(self.saleView) { _ in
+//
+//        }
+        
+        self.customerView.startRecording()
     }
 
     // MARK: 結束
     @objc
     private func doDone(_ sender: UIButton) {
-        self.recorder.stopRecording { _ in
-
-        }
+        self.customerView.stopRecording()
+        
+//        self.viewRecorder.stop()
+//        self.recordButton.isEnabled = true
+        
+//        self.recorder.stopRecording { _ in
+//
+//        }
     }
 }
 
