@@ -75,19 +75,25 @@ internal final class CustomRTCMTLVideoView: RTCMTLVideoView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    internal final func startRecording(timeScale: CMTimeScale) {
+    internal final func startRecording() {
+        guard !self.isRecord else {
+            return
+        }
+        print("videoView start \(Date())")
         self.frameCount = .zero
-        self.timeScale = timeScale
         self.assetWriter.startWriting()
         self.assetWriter.startSession(atSourceTime: .zero)
         self.isRecord = true
     }
     
     internal final func stopRecording() {
+        guard self.isRecord else {
+            return
+        }
         self.isRecord = false
         self.cameraInput.markAsFinished()
         self.assetWriter.finishWriting {
-            
+            print("videoView done \(Date())")
         }
     }
     

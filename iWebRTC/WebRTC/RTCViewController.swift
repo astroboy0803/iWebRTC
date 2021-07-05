@@ -78,6 +78,7 @@ internal final class RTCViewController: UIViewController {
     private let recorder: RTCRecorder
     private let viewRecorder: ViewRecorder
     private var isRetry: Bool = true
+    private var audioRecorder: AVAudioRecorder!
 
     init() {
         self.viewRecorder = .init()
@@ -224,6 +225,7 @@ extension RTCViewController {
     // MARK: 錄影
     @objc
     private func doRecord(_ sender: UIButton) {
+        
 //        self.recorder.startRecording { _ in
 //
 //        }
@@ -233,14 +235,40 @@ extension RTCViewController {
 //
 //        }
         
-        self.customerView.startRecording()
+        print("Recording")
+//
+//        // source: https://gist.github.com/vikaskore/e5d9fc91feac455d6b4778b3d768a6e8
+//        let docURL = try! FileManager.default
+//            .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+//        let fileURL = docURL
+//            .appendingPathComponent(UUID().uuidString)
+//            .appendingPathExtension("m4a")
+//        let settings = [
+//            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+//            AVSampleRateKey: 44100,
+//            AVNumberOfChannelsKey: 2,
+//            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+//        ]
+//        self.audioRecorder = try! AVAudioRecorder(url: fileURL, settings: settings)
+//        self.audioRecorder.record()
+        
+//        // MARK: video record
+//        self.customerView.startRecording()
+        self.webRTCClient.startRecord()
     }
 
     // MARK: 結束
     @objc
     private func doDone(_ sender: UIButton) {
-        self.customerView.stopRecording()
+        print("done....")
         
+        // MARK: video record
+//        self.customerView.stopRecording()
+        self.webRTCClient.stopRecrod()
+        
+//        self.audioRecorder.stop()
+        
+                
 //        self.viewRecorder.stop()
 //        self.recordButton.isEnabled = true
         

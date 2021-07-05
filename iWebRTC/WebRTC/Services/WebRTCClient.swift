@@ -37,6 +37,7 @@ final class WebRTCClient: NSObject {
     private var remoteVideoTrack: RTCVideoTrack?
     private var localDataChannel: RTCDataChannel?
     private var remoteDataChannel: RTCDataChannel?
+    private var capturerProxy: VideoCapturerProxy?
 
     @available(*, unavailable)
     override init() {
@@ -126,12 +127,20 @@ final class WebRTCClient: NSObject {
             let fps = (format.videoSupportedFrameRateRanges.sorted { return $0.maxFrameRate < $1.maxFrameRate }.last) else {
             return
         }
-
         capturer.startCapture(with: frontCamera,
                               format: format,
                               fps: Int(fps.maxFrameRate))
 
         self.localVideoTrack?.add(renderer)
+    }
+    
+    func stopCapture() {
+        guard let capturer = self.videoCapturer as? RTCCameraVideoCapturer else {
+            return
+        }
+        capturer.stopCapture {
+            debugPrint("stop...")
+        }
     }
 
     func renderRemoteVideo(to renderer: RTCVideoRenderer) {
@@ -182,7 +191,9 @@ final class WebRTCClient: NSObject {
         #if TARGET_OS_SIMULATOR
         self.videoCapturer = RTCFileVideoCapturer(delegate: videoSource)
         #else
-        self.videoCapturer = RTCCameraVideoCapturer(delegate: videoSource)
+        let cameraVideoCapturer = RTCCameraVideoCapturer(delegate: videoSource)
+        self.videoCapturer = cameraVideoCapturer
+        self.capturerProxy = .init(capturer: cameraVideoCapturer)
         #endif
 
         let videoTrack = WebRTCClient.factory.videoTrack(with: videoSource, trackId: "video0")
@@ -202,6 +213,14 @@ final class WebRTCClient: NSObject {
     func sendData(_ data: Data) {
         let buffer = RTCDataBuffer(data: data, isBinary: true)
         self.remoteDataChannel?.sendData(buffer)
+    }
+    
+    internal final func startRecord() {
+        self.capturerProxy?.startRecrod()
+    }
+    
+    internal final func stopRecrod() {
+        self.capturerProxy?.stopRecrod()
     }
 }
 

@@ -15,6 +15,7 @@
 		788DECD2267F4D2800C6141E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788DECD0267F4D2800C6141E /* Main.storyboard */; };
 		788DECD4267F4D2900C6141E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 788DECD3267F4D2900C6141E /* Assets.xcassets */; };
 		788DECD7267F4D2900C6141E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 788DECD5267F4D2900C6141E /* LaunchScreen.storyboard */; };
+		78B156E326931287005932FE /* VideoCapturerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B156E226931287005932FE /* VideoCapturerProxy.swift */; };
 		78BAA4BF26879D46007495D4 /* ViewRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAA4BE26879D46007495D4 /* ViewRecorder.swift */; };
 		78BAA4C22687A045007495D4 /* ImageToVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BAA4C12687A045007495D4 /* ImageToVideo.swift */; };
 		78CEB883267F5184009A5955 /* RTCConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CEB880267F5184009A5955 /* RTCConfig.swift */; };
@@ -40,6 +41,7 @@
 		788DECD3267F4D2900C6141E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		788DECD6267F4D2900C6141E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		788DECD8267F4D2900C6141E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78B156E226931287005932FE /* VideoCapturerProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapturerProxy.swift; sourceTree = "<group>"; };
 		78BAA4BE26879D46007495D4 /* ViewRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRecorder.swift; sourceTree = "<group>"; };
 		78BAA4C12687A045007495D4 /* ImageToVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageToVideo.swift; sourceTree = "<group>"; };
 		78CEB880267F5184009A5955 /* RTCConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCConfig.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				7857ECFF268898C900C31491 /* CustomRTCMTLVideoView.swift */,
+				78B156E226931287005932FE /* VideoCapturerProxy.swift */,
 			);
 			path = Customization;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				78BAA4BF26879D46007495D4 /* ViewRecorder.swift in Sources */,
 				78CEB892267F51DD009A5955 /* NativeWebSocket.swift in Sources */,
 				78CEB884267F5184009A5955 /* RTCRecorder.swift in Sources */,
+				78B156E326931287005932FE /* VideoCapturerProxy.swift in Sources */,
 				78CEB88B267F51A7009A5955 /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

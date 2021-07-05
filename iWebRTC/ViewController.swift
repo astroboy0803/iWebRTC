@@ -12,6 +12,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.showRTC(UIButton())
+        }
+    }
     
     @IBAction private func showRTC(_ sender: UIButton) {
         let rtcVC = RTCViewController()
