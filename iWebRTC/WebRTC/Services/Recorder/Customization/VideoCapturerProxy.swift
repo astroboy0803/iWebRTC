@@ -38,6 +38,7 @@ internal final class VideoCapturerProxy: NSObject {
     }()
     
     init(capturer: RTCCameraVideoCapturer) {
+        // source: https://stackoverflow.com/questions/33857572/quickblox-how-to-save-a-qbrtccameracapture-to-a-file
         let videoOutput = capturer.captureSession
             .outputs
             .compactMap({ $0 as? AVCaptureVideoDataOutput })
@@ -95,6 +96,8 @@ extension VideoCapturerProxy: AVCaptureVideoDataOutputSampleBufferDelegate {
         else {
             return
         }
+        // source: https://stackoverflow.com/questions/20330174/avcapture-capturing-and-getting-framebuffer-at-60-fps-in-ios-7
+        // source: https://stackoverflow.com/questions/44135223/record-video-with-avassetwriter-first-frames-are-black
         if self.assetWriter.status == .unknown {
             self.assetWriter.startWriting()
             self.assetWriter.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sampleBuffer))
