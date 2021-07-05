@@ -69,12 +69,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7857ECFC268896A800C31491 /* Testing */ = {
+		7857ECFC268896A800C31491 /* Customization */ = {
 			isa = PBXGroup;
 			children = (
 				7857ECFF268898C900C31491 /* CustomRTCMTLVideoView.swift */,
 			);
-			path = Testing;
+			path = Customization;
 			sourceTree = "<group>";
 		};
 		788DECBE267F4D2800C6141E = {
@@ -110,7 +110,7 @@
 		78BAA4C02687A01B007495D4 /* Recorder */ = {
 			isa = PBXGroup;
 			children = (
-				7857ECFC268896A800C31491 /* Testing */,
+				7857ECFC268896A800C31491 /* Customization */,
 				78BAA4C42687A66A007495D4 /* ReplayKit */,
 				78BAA4C32687A65E007495D4 /* ViewRecorder */,
 			);
