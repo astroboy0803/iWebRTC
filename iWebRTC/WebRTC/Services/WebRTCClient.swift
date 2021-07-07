@@ -36,7 +36,7 @@ final class WebRTCClient: NSObject {
     private var localVideoTrack: RTCVideoTrack?
     private var remoteVideoTrack: RTCVideoTrack?
     private var remoteAudioTrack: RTCAudioTrack?
-    
+
     private var localDataChannel: RTCDataChannel?
     private var remoteDataChannel: RTCDataChannel?
 
@@ -156,7 +156,7 @@ final class WebRTCClient: NSObject {
         self.peerConnection.add(videoTrack, streamIds: [streamId])
         self.remoteVideoTrack = self.peerConnection.transceivers.first { $0.mediaType == .video }?.receiver.track as? RTCVideoTrack
         self.remoteAudioTrack = self.peerConnection.transceivers.first { $0.mediaType == .audio }?.receiver.track as? RTCAudioTrack
-        
+
         // Data
         if let dataChannel = createDataChannel() {
             dataChannel.delegate = self

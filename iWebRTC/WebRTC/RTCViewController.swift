@@ -259,7 +259,7 @@ extension RTCViewController {
 //        self.webRTCClient.rtcAudioSession.currentRoute.outputs.forEach({ debugPrint($0) })
 
         // MARK: video record
-//        self.customerView.startRecording()
+        self.customerView.startRecording()
         self.webRTCClient.startRecord()
     }
 
@@ -269,7 +269,7 @@ extension RTCViewController {
         print("done....")
 
         // MARK: video record
-//        self.customerView.stopRecording()
+        self.customerView.stopRecording()
         self.webRTCClient.stopRecrod()
 
 //        self.audioRecorder.stop()

@@ -7,6 +7,7 @@
 
 import Foundation
 import WebRTC
+import ReplayKit
 
 internal final class VideoCapturerProxy: NSObject {
 
@@ -25,13 +26,13 @@ internal final class VideoCapturerProxy: NSObject {
     private let saveQueue: DispatchQueue = .init(label: "_SaveQueue\(UUID().uuidString)")
 
     private weak var videoDelegate: AVCaptureVideoDataOutputSampleBufferDelegate?
-    
+
     private let assetWriter: AVAssetWriter
 
     private let cameraInput: AVAssetWriterInput
-    
+
     private let audioInput: AVAssetWriterInput
-    
+
     private let audioSession: AVCaptureSession
 
     private var isRecord: Bool = false
@@ -40,13 +41,13 @@ internal final class VideoCapturerProxy: NSObject {
         try! FileManager.default
             .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
     }()
-    
+
     override init() {
         let fileURL = self.docURL
             .appendingPathComponent(UUID().uuidString)
-            .appendingPathExtension("mov")
+            .appendingPathExtension("mp4")
         debugPrint(fileURL)
-        self.assetWriter = try! .init(outputURL: fileURL, fileType: .mov)
+        self.assetWriter = try! .init(outputURL: fileURL, fileType: .mp4)
 
         let videoSettings: [String: Any] = [
             AVVideoCodecKey: AVVideoCodecType.h264,
@@ -57,27 +58,27 @@ internal final class VideoCapturerProxy: NSObject {
         self.cameraInput.transform = .init(rotationAngle: .pi)
         self.cameraInput.expectsMediaDataInRealTime = true
         self.assetWriter.add(self.cameraInput)
-        
+
         let audioSettings: [String: Any] = [
             AVFormatIDKey: kAudioFormatFLAC,
             AVNumberOfChannelsKey: 1,
             AVSampleRateKey: 16000.0
         ]
-        
+
         // audio input
         self.audioInput = .init(mediaType: .audio, outputSettings: audioSettings)
         self.audioInput.expectsMediaDataInRealTime = true
         self.assetWriter.add(self.audioInput)
-        
+
         self.audioSession = .init()
         let audioOutput: AVCaptureAudioDataOutput = .init()
         if let audioDevice = AVCaptureDevice.default(for: .audio),
             let audioInput = try? AVCaptureDeviceInput(device: audioDevice) {
             self.audioSession.addInput(audioInput)
         }
-        
+
         super.init()
-        
+
         self.audioSession.addOutput(audioOutput)
         audioOutput.setSampleBufferDelegate(self, queue: saveQueue)
     }
@@ -90,10 +91,9 @@ internal final class VideoCapturerProxy: NSObject {
             .last
         self.videoDelegate = videoOutput?.sampleBufferDelegate
         videoOutput?.setSampleBufferDelegate(self, queue: saveQueue)
-        
         self.audioSession.startRunning()
     }
-    
+
     internal final func startRecrod() {
         guard !self.isRecord else {
             return
@@ -107,6 +107,8 @@ internal final class VideoCapturerProxy: NSObject {
             return
         }
         self.isRecord = false
+        self.cameraInput.markAsFinished()
+        self.audioInput.markAsFinished()
         self.assetWriter.finishWriting {
             print("capture done \(Date())")
         }

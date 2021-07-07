@@ -108,7 +108,6 @@ internal final class CustomRTCMTLVideoView: RTCMTLVideoView {
     private func saveVideo(cvPixelBuffer: CVPixelBuffer) {
         // source: https://github.com/lhuanyu/ARScreenRecorder/blob/master/ARKitInteraction/ARScreenRecorder.swift
         self.saveQueue.async {
-            print("\(self.frameCount).savevideo")
             if self.cameraInput.isReadyForMoreMediaData {
                 self.cameraInputAdaptor.append(cvPixelBuffer, withPresentationTime: .init(value: self.frameCount, timescale: self.timeScale))
                 self.frameCount += 1
