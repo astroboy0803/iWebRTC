@@ -13,7 +13,7 @@ internal protocol CustomRenderBufferDelegate: AnyObject {
 }
 
 internal final class CustomRTCMTLVideoView: RTCMTLVideoView {
-    
+
     private enum recordingQuality: CGFloat {
         case lowest = 0.3
         case low = 0.5
@@ -23,58 +23,58 @@ internal final class CustomRTCMTLVideoView: RTCMTLVideoView {
         case high = 1.5
         case best = 2.0
     }
-    
+
     private let recordingQua: recordingQuality = .normal
-    
+
     private let saveQueue: DispatchQueue = .init(label: "_SaveQueue\(UUID().uuidString)")
-    
+
     private var frameCount: CMTimeValue = .zero
-    
+
     private var timeScale: CMTimeScale = 60
-        
+
     private let videoSettings: [String: Any]
-    
+
     private let assetWriter: AVAssetWriter
-        
+
     private let cameraInput: AVAssetWriterInput
-    
+
     private let cameraInputAdaptor: AVAssetWriterInputPixelBufferAdaptor
-        
+
     private var isRecord: Bool = false
-    
+
     private weak var renderDelegate: CustomRenderBufferDelegate?
-    
+
     private let docURL = {
         try! FileManager.default
             .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
     }()
-    
+
     override init(frame: CGRect) {
-        
+
         let fileURL = self.docURL
             .appendingPathComponent(UUID().uuidString)
             .appendingPathExtension("mp4")
         self.assetWriter = try! .init(outputURL: fileURL, fileType: .mp4)
-        
+
         self.videoSettings = [
             AVVideoCodecKey: AVVideoCodecType.h264,
             AVVideoWidthKey: UIScreen.main.bounds.size.width * recordingQua.rawValue,
             AVVideoHeightKey: UIScreen.main.bounds.size.height * recordingQua.rawValue
         ]
-        
+
         self.cameraInput = .init(mediaType: .video, outputSettings: self.videoSettings)
         self.cameraInput.transform = .init(rotationAngle: .pi)
-        
+
         self.assetWriter.add(self.cameraInput)
         self.cameraInputAdaptor = .init(assetWriterInput: self.cameraInput, sourcePixelBufferAttributes: self.videoSettings)
-        
+
         super.init(frame: frame)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     internal final func startRecording() {
         guard !self.isRecord else {
             return
@@ -85,7 +85,7 @@ internal final class CustomRTCMTLVideoView: RTCMTLVideoView {
         self.assetWriter.startSession(atSourceTime: .zero)
         self.isRecord = true
     }
-    
+
     internal final func stopRecording() {
         guard self.isRecord else {
             return
@@ -96,7 +96,7 @@ internal final class CustomRTCMTLVideoView: RTCMTLVideoView {
             print("videoView done \(Date())")
         }
     }
-    
+
     override func renderFrame(_ frame: RTCVideoFrame?) {
         if self.isRecord, let frame = frame, let rtcCVPixelBuffer = frame.buffer as? RTCCVPixelBuffer {
             self.renderDelegate?.capture(cvPixelBuffer: rtcCVPixelBuffer.pixelBuffer)
@@ -104,7 +104,7 @@ internal final class CustomRTCMTLVideoView: RTCMTLVideoView {
         }
         super.renderFrame(frame)
     }
-    
+
     private func saveVideo(cvPixelBuffer: CVPixelBuffer) {
         // source: https://github.com/lhuanyu/ARScreenRecorder/blob/master/ARKitInteraction/ARScreenRecorder.swift
         self.saveQueue.async {
@@ -115,7 +115,7 @@ internal final class CustomRTCMTLVideoView: RTCMTLVideoView {
             }
         }
     }
-        
+
     /// frame to image and save
     /// - Parameter cvPixelBuffer: CVPixelBuffer
     private func saveImage(cvPixelBuffer: CVPixelBuffer) {

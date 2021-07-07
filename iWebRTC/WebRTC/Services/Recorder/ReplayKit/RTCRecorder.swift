@@ -21,50 +21,50 @@ public class RTCRecorder {
     }
 
     public var recordingQua: recordingQuality = .normal
-    
+
     private var assetWriter: AVAssetWriter
-    
+
     private lazy var videoInput: AVAssetWriterInput = {
         let videoSettings: [String: Any] = [
             AVVideoCodecKey: AVVideoCodecType.h264,
             AVVideoWidthKey: UIScreen.main.bounds.size.width * recordingQua.rawValue,
             AVVideoHeightKey: UIScreen.main.bounds.size.height * recordingQua.rawValue
             ]
-        let videoInput = AVAssetWriterInput(mediaType: AVMediaType.video, outputSettings: videoSettings)
+        let videoInput = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings)
         videoInput.expectsMediaDataInRealTime = true
         return videoInput
     }()
-    
+
     private lazy var audioInput: AVAssetWriterInput = {
         let audioSettings: [String: Any] = [
             AVFormatIDKey: kAudioFormatFLAC,
             AVNumberOfChannelsKey: 1,
             AVSampleRateKey: 16000.0
         ]
-        let audioInput = AVAssetWriterInput(mediaType: AVMediaType.audio, outputSettings: audioSettings)
+        let audioInput = AVAssetWriterInput(mediaType: .audio, outputSettings: audioSettings)
         audioInput.expectsMediaDataInRealTime = true
         return audioInput
     }()
-    
+
     private lazy var micInput: AVAssetWriterInput = {
         let audioSettings: [String: Any] = [
             AVFormatIDKey: kAudioFormatFLAC,
             AVNumberOfChannelsKey: 1,
             AVSampleRateKey: 16000.0
         ]
-        let audioInput = AVAssetWriterInput(mediaType: AVMediaType.audio, outputSettings: audioSettings)
+        let audioInput = AVAssetWriterInput(mediaType: .audio, outputSettings: audioSettings)
         audioInput.expectsMediaDataInRealTime = true
         return audioInput
     }()
 
     private let recorder: RPScreenRecorder
-    
+
     public init() {
         self.recorder = RPScreenRecorder.shared()
         self.recorder.isMicrophoneEnabled = true
         self.recorder.isCameraEnabled = true
         self.recorder.cameraPosition = .front
-        
+
         self.assetWriter = try! AVAssetWriter(outputURL: ReplayFileUtil.filePath(), fileType:
             .mov)
         [videoInput, audioInput, micInput].forEach({
@@ -80,19 +80,19 @@ public class RTCRecorder {
         ReplayFileUtil.deleteFile()
         self.recorder.startCapture(handler: { sample, bufferType, error in
             print(bufferType.rawValue)
-            
+
             if let error = error {
-                self.stopRecording { stopError in
+                self.stopRecording { _ in
                 }
                 recordingHandler(error)
                 return
             }
-            
+
             if self.assetWriter.status == .failed {
                 print("Error occured:\n\(String(describing: self.assetWriter.error))")
                 recordingHandler(self.assetWriter.error)
                 self.stopRecording { _ in
-                    
+
                 }
                 return
             }
@@ -110,7 +110,7 @@ public class RTCRecorder {
             recordingHandler(error)
         }
     }
-    
+
     private func handle(sampleBuffer: CMSampleBuffer) {
         if self.assetWriter.status == .unknown {
             self.assetWriter.startWriting()
@@ -121,14 +121,14 @@ public class RTCRecorder {
             self.videoInput.append(sampleBuffer)
         }
     }
-    
+
     private func add(sampleBuffer: CMSampleBuffer, to writerInput: AVAssetWriterInput) {
         guard writerInput.isReadyForMoreMediaData else {
             return
         }
         writerInput.append(sampleBuffer)
     }
-    
+
     internal final func stopRecording(handler: @escaping (Error?) -> Void) {
         self.recorder.stopCapture { [weak self] error in
             handler(error)
@@ -157,17 +157,17 @@ public class ReplayFileUtil {
 
     public class func deleteFile() {
         let filemanager = FileManager.default
-        
+
         // document
         guard let folder = filemanager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return
         }
-        
+
 //        // cache
 //        guard let folder = filemanager.urls(for: .cachesDirectory, in: .userDomainMask).first else {
 //            return
 //        }
-                
+
         let destinationPath = folder.appendingPathComponent("screenRecording.mp4").path
         do {
             try filemanager.removeItem(atPath: destinationPath)

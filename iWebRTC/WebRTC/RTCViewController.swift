@@ -225,18 +225,18 @@ extension RTCViewController {
     // MARK: 錄影
     @objc
     private func doRecord(_ sender: UIButton) {
-        
+
 //        self.recorder.startRecording { _ in
 //
 //        }
-        
+
 //        self.recordButton.isEnabled = false
 //        self.viewRecorder.startRecording(self.saleView) { _ in
 //
 //        }
-        
+
         print("Recording")
-//
+
 //        // source: https://gist.github.com/vikaskore/e5d9fc91feac455d6b4778b3d768a6e8
 //        let docURL = try! FileManager.default
 //            .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -246,13 +246,19 @@ extension RTCViewController {
 //        let settings = [
 //            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
 //            AVSampleRateKey: 44100,
-//            AVNumberOfChannelsKey: 2,
+//            AVNumberOfChannelsKey: 1,
 //            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
 //        ]
 //        self.audioRecorder = try! AVAudioRecorder(url: fileURL, settings: settings)
 //        self.audioRecorder.record()
-        
-//        // MARK: video record
+
+//        // source: https://chic0815.gitbook.io/jaesung/swift-study/framework-avfoundation/webrtc-audiosession
+//        print("inputs....")
+//        self.webRTCClient.rtcAudioSession.currentRoute.inputs.forEach({ debugPrint($0) })
+//        print("outputs....")
+//        self.webRTCClient.rtcAudioSession.currentRoute.outputs.forEach({ debugPrint($0) })
+
+        // MARK: video record
 //        self.customerView.startRecording()
         self.webRTCClient.startRecord()
     }
@@ -261,17 +267,16 @@ extension RTCViewController {
     @objc
     private func doDone(_ sender: UIButton) {
         print("done....")
-        
+
         // MARK: video record
 //        self.customerView.stopRecording()
         self.webRTCClient.stopRecrod()
-        
+
 //        self.audioRecorder.stop()
-        
-                
+
 //        self.viewRecorder.stop()
 //        self.recordButton.isEnabled = true
-        
+
 //        self.recorder.stopRecording { _ in
 //
 //        }
