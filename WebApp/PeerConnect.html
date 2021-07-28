@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RTCPeerConnection 範例</title>
+    <style type="text/css">
+    #container {
+        display: flex;
+        justify-content: center;
+    }
+    section {
+       padding: 10px;
+    }
+    section + section {
+        margin-left: 20px;
+        border-left: 2px solid black;
+    }
+    </style>
+  </head>
+
+  <body>
+    <h1>RTCPeerConnection 範例</h1>
+    <div id="container">
+      <section>
+        <h1>PC 1 Tracker</h1>
+        <video id="localVideo" autoplay muted></video>
+      </section>
+      <section>
+        <h1>PC 2 Receiver</h1>
+        <video id="remoteVideo" autoplay></video>
+      </section>
+
+      <div class="box">
+        <button id="startButton">Start</button>
+        <button id="callButton">Call</button>
+        <button id="hangupButton">Hang Up</button>
+      </div>
+    </div>
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="./js/Peer.js" async></script>
+  </body>
+</html>

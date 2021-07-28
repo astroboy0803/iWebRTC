@@ -1,14 +1,101 @@
 <html>
     <head>
         <title>getUserMedia</title>
+        <style type="text/css">
+            .none {
+                filter: none;
+            }
+
+            .blur {
+                filter: blur(3px);
+            }
+
+            .grayscale {
+                filter: grayscale(1);
+            }
+
+            .invert {
+                filter: invert(1);
+            }
+
+            .contrast {
+                filter: contrast(200%);
+            }
+
+            .sepia {
+                filter: sepia(1);
+            }
+
+            .opacity {
+                filter: opacity(50%);
+            }
+
+            .saturate {
+                filter: saturate(200%);
+            }
+
+            .hue-rotate {
+                filter: hue-rotate(180deg);
+            }
+
+            .drop-shadow {
+                filter: drop-shadow(16px 16px 10px black);
+            }
+        </style>
     </head>
     <body>
         <h1>Get User Media</h1>
-        <video autoplay></video>
+        <div>
+            <!-- 取得media stream -->
+            <button onclick="onCapture()">Capture</button>
+            <!-- 停止media stream -->
+            <button onclick="stopCapture()">Stop</button>  
+            <!-- 截圖 -->
+            <button id="screenshot-button">Screenshot Button</button>
+            <div>
+                <label for="filter">CSS Filter</label>
+                <select id="filter">
+                    <option value="none">None</option>
+                    <option value="blur">Blur</option>
+                    <option value="grayscale">Grayscale</option>
+                    <option value="invert">Invert</option>
+                    <option value="contrast">Contrast</option>
+                    <option value="sepia">Sepia</option>
+                    <option value="opacity">Opacity 50%</option>
+                    <option value="saturate">Saturate</option>
+                    <option value="hue-rotate">Hue Rotate</option>
+                    <option value="drop-shadow">Drop Shadow</option>
+                </select>
+            </div>
+        </div>        
+        <div>
+            <video autoplay></video>
+        </div>
+        <div id="screenshot">
+            <h1>搭配 Canvas 做視訊截圖功能</h1>
+            <hr>
+            <div>
+                <canvas></canvas>
+            </div>            
+            <div>
+                <!-- 也能將canvas轉成image data -->
+                <img src="">            
+            </div>
+        </div>
+
+        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+        <!-- 主要程式 -->
+        <script src="./js/main.js"></script>
+
+        <!-- move main.js
         <script>
             // 這邊我們單純只想取得video
             const mediaStreamConstraints = {
-                video: true
+                audio: true,
+                video: {
+                    width: { min: 1280 },
+                    height: { min: 720 }
+                }
             };
 
             function handleMediaStreamError(error) {
@@ -30,10 +117,42 @@
                 }
             }
 
-            navigator.mediaDevices
-                .getUserMedia(mediaStreamConstraints)
+            // 相容性處理
+            // 官網建議使用adapter.js - https://github.com/webrtc/adapter.git
+            function browserUserMedia() {
+                return navigator.getUserMedia
+                    || navigator.webkitGetUserMedia
+                    || navigator.mozGetUserMedia
+                    || navigator.msGetUserMedia;
+            }
+
+            function getBrowserMediaDevice(constraints) {
+                if ('mediaDevices' in navigator) {
+                    return navigator.mediaDevices.getUserMedia(constraints)
+                }
+                // 相容性處理
+                navigator.mediaDevices = {};
+                navigator.mediaDevices.getUserMedia = function(constraints) {
+                    const getUserMedia = browserUserMedia()
+
+                    // 不支援的情況下
+                    if (!getUserMedia) {
+                        return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+                    }
+
+                    // 保持跟原先api一樣故將其封裝成promise
+                    return new Promise(function(resolve, reject) {
+                        getUserMedia.call(navigator, constraints, resolve, reject);
+                    });
+                }
+
+                return navigator.mediaDevices.getUserMedia(constraints)
+            }
+
+            getBrowserMediaDevice(mediaStreamConstraints)
                 .then(gotLocalMediaStream)
                 .catch(handleMediaStreamError)
         </script>
+        -->
     </body>
 </html>
