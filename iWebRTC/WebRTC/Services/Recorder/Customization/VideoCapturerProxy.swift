@@ -47,7 +47,7 @@ internal final class VideoCapturerProxy: NSObject {
             .appendingPathComponent(UUID().uuidString)
             .appendingPathExtension("mp4")
         debugPrint(fileURL)
-        self.assetWriter = try! .init(outputURL: fileURL, fileType: .mp4)
+        self.assetWriter = try! .init(outputURL: fileURL, fileType: .mov)
 
         let videoSettings: [String: Any] = [
             AVVideoCodecKey: AVVideoCodecType.h264,

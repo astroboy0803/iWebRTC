@@ -30,8 +30,10 @@ final class WebRTCClient: NSObject {
     private let peerConnection: RTCPeerConnection
     private let rtcAudioSession = RTCAudioSession.sharedInstance()
     private let audioQueue = DispatchQueue(label: "audio")
-    private let mediaConstrains = [kRTCMediaConstraintsOfferToReceiveAudio: kRTCMediaConstraintsValueTrue,
-                                   kRTCMediaConstraintsOfferToReceiveVideo: kRTCMediaConstraintsValueTrue]
+    private let mediaConstrains = [
+        kRTCMediaConstraintsOfferToReceiveAudio: kRTCMediaConstraintsValueTrue,
+        kRTCMediaConstraintsOfferToReceiveVideo: kRTCMediaConstraintsValueTrue
+    ]
     private var videoCapturer: RTCVideoCapturer?
     private var localVideoTrack: RTCVideoTrack?
     private var remoteVideoTrack: RTCVideoTrack?
@@ -166,7 +168,7 @@ final class WebRTCClient: NSObject {
 
     private func createVideoTrack() -> RTCVideoTrack {
         let videoSource = WebRTCClient.factory.videoSource()
-
+        
         #if TARGET_OS_SIMULATOR
         self.videoCapturer = RTCFileVideoCapturer(delegate: videoSource)
         #else
